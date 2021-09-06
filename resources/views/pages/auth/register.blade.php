@@ -33,6 +33,6 @@
   </div>
 </div>
 <div class="mt-5 text-muted text-center">
-  Don't have an account? <a href="auth-register.html">Create One</a>
+  I have account? <a href="{{ route('login') }}">Login</a>
 </div>
 @endsection

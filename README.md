@@ -1,8 +1,11 @@
 #Frontend
 - register ✅
 - login ✅
-- home
-- cart
-- profile
-- tambah produk
-- update produk
+- home ✅
+- products ✅
+- tambah produk ✅
+- update produk ✅
+- profile ✅
+- cart ✅
+- add to cart ✅
+- update cart ✅
