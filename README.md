@@ -15,7 +15,7 @@
 - Authentication ✅
 - Product Admin ✅
 - Product Public ✅
-- Keranjang 
-- Checkout
-- History Pesanan
-- Kelola Pesanan (Admin)
+- Keranjang ✅
+- Checkout ✅
+- History Pesanan ✅
+- Kelola Pesanan (Admin) ✅
