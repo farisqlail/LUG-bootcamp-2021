@@ -1,62 +1,59 @@
 @extends('layout.public')
 
 @section('content')
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered table-md">
-              <tbody>
-              <tr>
-                <th>#</th>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Amount</th>
-                <th>Action</th>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Irwansyah Saputra</td>
-                <td>2017-01-09</td>
-                <td>10</td>
-                <td>
-                  <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                  <a href="{{ route('cart.update') }}" class="btn btn-success btn-sm">Update</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <form action="">
-                <div class="form-group">
-                  <label for="total_payment">Total Payment</label>
-                  <input id="total_payment" name="total_payment" type="text" class="form-control" readonly>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-md">
+
+                            <tr>
+                              <th class="text-center">#</th>
+                                <th class="text-center">Nama Produk</th>
+                                <th class="text-center">Harga Satuan</th>
+                                <th class="text-center">Jumlah</th>
+                                <th class="text-center">Sub Total</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                            @if (!empty($keranjang))
+                                @foreach ($keranjang as $data)
+                                    <tr>
+                                      <td>{{$loop->iteration}}</td>
+                                      <td>{{$data->nama_produk}}</td>
+                                      <td class="text-center">{{format_rp($data->harga)}}</td>
+                                      <td class="text-center">{{$data->jumlah}}</td>
+                                      <td class="text-center">{{format_rp($data->subtotal)}}</td>
+                                      <td class="d-flex justify-content-center">
+                                        <form action="{{route('cart.destroy', [$data->id_detail])}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                        <a href="{{route('cart.edit', [$data->id_detail])}}" class="btn btn-info btn-sm ml-2">Update</a>
+                                      </td>
+                                    </tr>
+                                @endforeach
+                                <tr>
+                                    <td colspan="4" class="text-right"><strong>Total Harga:</strong></td>
+                                    <td class="text-center"><strong>{{format_rp($transaksi->harga_total)}}</strong></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="4"></td>
+                                  <td>
+                                      <a href="{{route('checkout.index')}}" class="btn btn-success btn-block">
+                                          <i class="fas fas-arrow-right"></i> Checkout
+                                      </a>
+                                  </td>
+                              </tr>
+                            @else
+                                
+                            @endif
+                        </table>
+                    </div>
+
                 </div>
-                <div class="form-group">
-                  <label for="shipping_method">Shipping Method</label>
-                  <select id="shipping_method" name="shipping_method" class="form-control">
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="shipping_address">Shipping Address</label>
-                  <textarea id="shipping_address" name="shipping_address" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="input_payment">Input Payment</label>
-                  <input id="input_payment" name="input_payment" type="text" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-primary">Checkout</button>
-              </form>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 @endsection

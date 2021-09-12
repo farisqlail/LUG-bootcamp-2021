@@ -60,9 +60,24 @@
                             @if (Auth()->user())
                                 @if (Auth()->user()->role == 'customer')
                                     <li class="nav-item">
-                                        <a href="{{ route('cart') }}" class="nav-link">
-                                            <i class="fas fa-shopping-cart"></i> <span
-                                                class="font-weight-bold ml-1">0</span>
+                                        <a href="{{ route('cart.index') }}" class="nav-link">
+                                            <i class="fas fa-shopping-cart"></i> 
+                                            @php
+                                                $transaksi = DB::table('transaksi')
+                                                    ->where('id_user', Auth::user()->id)
+                                                    ->where('status_transaksi', 'keranjang')
+                                                    ->first();
+                                                    if($transaksi){
+                                                        $jumlahKeranjang = DB::table('detail_transaksi')
+                                                        ->where('id_transaksi', $transaksi->id_transaksi)
+                                                        ->count();
+                                                    }
+                                            @endphp
+                                            @if (!empty($jumlahKeranjang))
+                                            <span class="font-weight-bold ml-1">{{$jumlahKeranjang}}</span>
+                                            @else
+                                            <span class="font-weight-bold ml-1">0</span>
+                                            @endif
                                         </a>
                                     </li>
                                 @endif
@@ -76,9 +91,18 @@
                                             <i class="far fa-user"></i> Profile
                                         </a>
                                         <div class="dropdown-divider"></div>
-                                        {{-- @if (Auth()->user())
-                                            
-                                        @endif --}}
+                                        @if (Auth()->user())
+                                            @if (Auth()->user()->role == 'admin')
+                                                <a href="{{route('transaksi.index')}}" class="dropdown-item has-icon">
+                                                    <i class="fas fa-shopping-bag"></i>Pesanan
+                                                </a>
+                                            @else
+                                            <a href="{{route('history.index')}}" class="dropdown-item has-icon">
+                                                <i class="fas fa-shopping-bag"></i>History Pembelian
+                                            </a>
+                                            @endif
+                                        @endif
+                                        <div class="dropdown-divider"></div>
                                         <form action="/auth/logout" method="post">
                                             @csrf
                                             <button type="submit" class="dropdown-item text-danger">
@@ -143,6 +167,7 @@
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>
     <script src="/assets/js/custom.js"></script>
+    @yield('script')
 </body>
 
 </html>

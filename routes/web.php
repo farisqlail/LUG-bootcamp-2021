@@ -5,6 +5,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ProdukController;
+use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\CheckoutController;
+use App\Http\Controllers\Customer\HistoryController;
+use App\Http\Controllers\Admin\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +29,23 @@ use App\Http\Controllers\Admin\ProdukController;
 
 Route::resource('home', HomeController::class);
 Route::get('/', [HomeController::class, 'index']);
-Route::view('/cart', 'pages.public.cart')->name('cart');
-Route::view('/product/detail', 'pages.public.product-detail')->name('product.detail');
-Route::view('/cart/update', 'pages.public.cart-update')->name('cart.update');
+
+
+Route::group([
+  'middleware'=> ['auth'=>'CheckRole:customer']
+], function(){
+  // Keranjang
+  Route::resource('cart', CartController::class);
+  Route::post('/keranjang/{id}', [CartController::class, 'keranjang'])->name('keranjang');
+
+  // Checkout
+  Route::resource('checkout', CheckoutController::class);
+  Route::get('kurir/{id}', [CheckoutController::class, 'kurir']);
+  Route::post('jasa', [CheckoutController::class, 'jasa'])->name('jasa');
+
+  // Pesan
+  Route::resource('history', HistoryController::class);
+});
 
 Route::group([
   'prefix' => 'auth',
@@ -43,16 +61,11 @@ Route::group([
 
 
 
-// Route::prefix('admin')->group(function () {
-//   Route::view('/products', 'pages.admin.products')->name('products');
-//   Route::view('/product/create', 'pages.admin.product-create')->name('product.create');
-//   Route::view('/product/update', 'pages.admin.product-update')->name('product.update');
-// });
-
 
 Route::group([
   'prefix' => 'admin',
   'middleware'=> ['auth'=>'CheckRole:admin']
 ], function(){
   Route::resource('produk', ProdukController::class);
+  Route::resource('transaksi', TransaksiController::class);
 });
