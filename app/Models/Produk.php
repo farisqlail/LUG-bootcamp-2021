@@ -2,12 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Produk extends Model
 {
-    protected $table  = 'produk';
-    protected $fillable = ['nama_produk', 'harga', 'stock', 'berat', 'thumb', 'deskripsi'];
+    use SoftDeletes;
+
+    protected $table = 'produk';
+
     protected $primaryKey = 'id_produk';
+
+    protected $fillable = [
+        'nama_produk',
+        'harga',
+        'stock',
+        'berat',
+        'thumb', 
+        'deskripsi',
+    ];
+    
 }

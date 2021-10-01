@@ -26,6 +26,7 @@ class CreateDetailTransaksiTable extends Migration
                     ->references('id_transaksi')
                     ->on('transaksi');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
