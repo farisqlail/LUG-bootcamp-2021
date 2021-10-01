@@ -54,7 +54,7 @@ class ProdukController extends Controller
             'deskripsi' => 'required',
         ]);
         if ($validator->fails()) {
-            return back()->withErrors($validator->errors());
+            return back()->withErrors($validator->errors())->withInput();
         }else{
             $produk = new Produk();
             $produk->nama_produk = $request->get('nama_produk');

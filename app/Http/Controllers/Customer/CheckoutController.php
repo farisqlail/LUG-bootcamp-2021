@@ -99,7 +99,6 @@ class CheckoutController extends Controller
             ]);
 
             $biaya = $ongkir->get();
-            // dd($biaya);
 
             $nama_jasa = $biaya[0]['name'];
             foreach ($biaya[0]['costs'] as $row) {
