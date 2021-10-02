@@ -119,7 +119,6 @@ class CartController extends Controller
         $transaksi = Transaksi::where('id_user', Auth::user()->id)
             ->where('status_transaksi', 'keranjang')
             ->first();
-            // dd($transaksi);
         if ($transaksi) {
             $detail = DB::table('detail_transaksi')
                 ->join('produk', 'produk.id_produk', '=', 'detail_transaksi.id_produk')
@@ -127,7 +126,6 @@ class CartController extends Controller
                 ->where('detail_transaksi.id_detail',  $id)
                 ->first();
 
-                // dd($detail);
             return view('pages.public.cart-update', [
                 'detail' => $detail
             ]);
@@ -148,7 +146,6 @@ class CartController extends Controller
         $transaksi = Transaksi::where('id_user', Auth::user()->id)
             ->where('status_transaksi', 'keranjang')
             ->first();
-            
         
             $subTotal = DB::table('detail_transaksi')
                 ->join('produk', 'produk.id_produk', '=', 'detail_transaksi.id_produk')

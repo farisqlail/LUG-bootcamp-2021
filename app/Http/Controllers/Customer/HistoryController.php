@@ -24,7 +24,6 @@ class HistoryController extends Controller
         $transaksi = Transaksi::where('id_user', Auth::user()->id)
             ->where('status_transaksi', 'checkout')
             ->get();
-        // dd($transaksi);
 
         return view('pages.public.history', [
             'transaksi' => $transaksi

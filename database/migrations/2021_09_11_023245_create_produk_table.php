@@ -22,6 +22,7 @@ class CreateProdukTable extends Migration
             $table->string('thumb');
             $table->longText('deskripsi');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
